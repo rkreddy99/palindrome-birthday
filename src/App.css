@@ -30,7 +30,7 @@ body {
 }
 
 header {
-  max-height: 20vh;
+  max-height: 22vh;
   text-align: center;
   background-color: var(--primary-color);
   box-shadow:
