@@ -70,8 +70,7 @@ header h1 {
   padding-right: 1.2rem;
   padding-bottom: 1rem;
   margin-bottom: 1.5rem;
-  /* background-color: lightcyan; */
-  background-color: rgba(255, 255, 255, 0.3);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.349), rgba(255, 255, 255, 0.623));
   backdrop-filter: blur(8px);
   box-shadow:
   0 2.8px 2.2px rgba(255, 255, 255, 0.034),
@@ -94,8 +93,9 @@ span {
 }
 
 hr {
-  background-color: #000413;
-  
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(0, 45, 96, 0), rgba(0, 45, 96, 0.75), rgba(0, 45, 96, 0));
 }
 
 form p {
@@ -142,6 +142,7 @@ button:hover {
 
 img {
   height: 150px;
+  filter: drop-shadow(5px 5px 5px #222);
 }
 
 .output {
@@ -149,12 +150,12 @@ img {
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  color: gold;
+  color: var(--secondary-color));
   font-weight: 700;
 }
 
 output p{
-    margin: 5px
+    margin: 5px;
 }
 
 footer {
