@@ -2,47 +2,58 @@ import "./App.css";
 import { useState } from "react";
 import happy from "./images/happy.svg";
 import unhappy from "./images/unhappy.svg";
+import ReactLoading from 'react-loading'
 
 function App() {
   const [birthday, setBirthday] = useState("");
-  const [msg, setMsg] = useState("");
-  const [palindrome, setPalindrome] = useState("");
+  const [output, setOutput] = useState(null);
 
   const datesInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   function changeBirthday(event) {
     setBirthday(event.target.value);
   }
 
-  function checkPalindrome(event) {
+  function showOutput(event) {
     event.preventDefault();
+    setOutput(<div className="output"><ReactLoading color="#192841" /></div>)
+    setTimeout(() => {
+      checkPalindrome();
+    }, 3000)
+  }
+
+  function checkPalindrome() {
     const dateArray = birthday.split("-");
     const inputYear = dateArray[0];
     const inputMonth = dateArray[1];
     const inputDate = dateArray[2];
     let setFlag = checkAllCombi(inputYear, inputMonth, inputDate);
     let newoutput = "";
+    let palindrome = null;
     if (setFlag) {
       newoutput = `It's a palindrome in format ${setFlag}, yay 🥳!!!`;
-      setPalindrome(true);
+      palindrome = (true);
     } else {
       let [nextdate, diff] = findNextDate(inputDate, inputMonth, inputYear);
       newoutput = `Umm! Your birthdate is not palindrome. FYI, Nearest palindrome date is ${nextdate}. You missed it by ${diff} days.`;
-      setPalindrome(false);
+      palindrome = (false);
     }
-    setMsg(newoutput);
+    setOutput(
+      <div className="output">
+        <p>{newoutput}</p>
+        <br/>
+        {palindrome === true && <img src={happy} alt="happy-img" />}
+        {palindrome === false && <img src={unhappy} alt="unhappy-img" />}
+      </div>
+    )
   }
 
   function checkAllCombi(yyyy, mm, dd) {
-    //yyyymmdd format string
     const dateFormat1 = yyyy + mm + dd;
 
-    //ddmmyyyy format string
     const dateFormat2 = dd + mm + yyyy;
 
-    //mmddyy format string
     const dateFormat3 = mm + dd + yyyy.substring(2);
 
-    //mddyyyy format string
     const dateFormat4 = Number(mm) + dd + yyyy;
 
     if (isPalindrome(dateFormat1)) {
@@ -77,7 +88,6 @@ function App() {
     let yyNo2 = Number(year);
 
     for (let i = 1; i > 0; i++) {
-      //forward check
       ddNo1 = ddNo1 + 1;
       if (ddNo1 > Number(datesInMonth[mmNo1 - 1])) {
         ddNo1 = 1;
@@ -101,7 +111,6 @@ function App() {
         return [`${setFlagNextDate}`, i];
       }
 
-      //backward check
       if (yyNo2 > 1) {
         ddNo2 = ddNo2 - 1;
         if (ddNo2 < 1) {
@@ -148,7 +157,7 @@ function App() {
             01081995, 080195, 1081995
           </h5>
           <hr />
-          <form onSubmit={checkPalindrome}>
+          <form onSubmit={showOutput}>
             <h3>Birth Date</h3>
             <input
               className="birthday"
@@ -162,11 +171,7 @@ function App() {
             <button type="submit">Check</button>
           </form>
           <hr />
-          <div className="output">
-            <p>{msg}</p>
-            {palindrome === true && <img src={happy} alt="happy-img" />}
-            {palindrome === false && <img src={unhappy} alt="unhappy-img" />}
-          </div>
+          {output}
         </div>
       </div>
 
