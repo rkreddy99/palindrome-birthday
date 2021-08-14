@@ -193,7 +193,7 @@ function App() {
             </a>
           </span>
           <span className="footerLink portfolio">
-            <a href="https://rkreddy99-portfolio.netlify.app/">
+            <a href="https://rkreddy99.netlify.app/">
               <i className="fas fa-briefcase"></i>
             </a>
           </span>
